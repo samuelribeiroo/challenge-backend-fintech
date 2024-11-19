@@ -15,5 +15,9 @@ app.setErrorHandler((error, _, reply) => {
     // For the future whether be a prerequisite we can implement a external service to create a  monitoring Tool, like Sentry/Relic..
   }
 
+  if (error.statusCode === 429) {
+    return reply.status(429).send({ message: error.stack })
+  }
+
   reply.status(500).send({ message: "Internal server error" })
 })
