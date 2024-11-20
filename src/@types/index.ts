@@ -1,4 +1,5 @@
 import { isValidCNPJ, isValidCpf } from "@/utils/validation"
+import { Prisma } from "@prisma/client"
 import { z } from "zod"
 
 const baseUserSchema = z.object({
@@ -7,7 +8,11 @@ const baseUserSchema = z.object({
   cpf: z.string().refine(isValidCpf, { message: "Invalid CPF format." }),
   password: z.string().min(6, "Password must be at least 6 characters long."),
   email: z.string().email().min(1, "Field is required"),
-  total_balance: z.number().min(1, "Total balance must be at least 0."),
+  total_balance: z.union([
+    z.number().min(0, "Total balance must be at least 0."),
+    z.string().transform(val => parseFloat(val)), 
+    z.custom(val => val instanceof Prisma.Decimal, { message: "Invalid Decimal format" }), 
+  ])
 })
 
 const storeOwnerSchema = baseUserSchema.extend({
