@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// Sempre nomear as tabelas com nomes no singular.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Roles {
+  common
+  store_owner
+}
+
+model UserApp {
+  id String @id @default(uuid())
+  full_name String
+  password String
+  email String @unique
+  cpf String @unique
+  cnpj String?
+  role Roles
+  total_balance Decimal @db.Decimal(12, 2)
+  created_at    DateTime @default(now())
+}
