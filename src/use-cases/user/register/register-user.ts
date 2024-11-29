@@ -13,7 +13,7 @@ export class RegisterUserService  {
   async create(data: IUser): Promise<UserResponse> {
     const processData = userSchema.parse(data)
 
-    const { id, full_name, cpf, email, password, role, total_balance } = processData
+    const { id, full_name, cpf, email, password, role, total_balance, cnpj } = processData
 
     const hashedPassword = await hash(password, 6)
 
@@ -28,6 +28,7 @@ export class RegisterUserService  {
       full_name,
       cpf,
       email,
+      cnpj,
       password: hashedPassword,
       total_balance: +total_balance,
       role,
