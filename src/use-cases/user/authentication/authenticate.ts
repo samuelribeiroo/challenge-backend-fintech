@@ -3,7 +3,7 @@ import { IUserRepository } from "@/repositories/customer-repository"
 import { compare } from "bcrypt"
 import { InvalidCredentialsError } from "../../errors/invalid-credentials-error"
 
-export class AuthenticateUseCase {
+export class AuthenticateService {
   constructor(private readonly customerRepository: IUserRepository) {}
 
   async authenticate({ cpf, password }: AuthenticateUserRequest): Promise<AuthenticateUserResponse> {

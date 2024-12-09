@@ -54,7 +54,7 @@ describe("Use Case: Register User", () => {
         id: "user-id-02",
         email: "johndoe2@mail.com",
       }),
-    ).rejects.toThrowError("CPF already exists.")
+    ).rejects.toThrowError("CPF is already in use.")
   })
 
   it("should throw an error if CPF format is invalid.", async () => {
