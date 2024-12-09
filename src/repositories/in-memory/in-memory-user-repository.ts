@@ -28,10 +28,6 @@ export class InMemoryIUserRepository implements IUserRepository {
   }
 
   async findCpf(cpf: string): Promise<UserResponse | null> {
-    const customer = this.items.find(item => item.cpf === cpf)
-
-    if (customer) throw new Error("CPF already exists.")
-
-    return customer || null
+    return this.items.find(item => item.cpf === cpf) || null
   }
 }
