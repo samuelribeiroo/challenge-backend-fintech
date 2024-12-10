@@ -12,6 +12,13 @@ app.register(fastifyCors, {
 app.register(fastifyRateLimit, {
   max: 100,
   timeWindow: "1 minute",
+  errorResponseBuilder: (_, context) => {
+    return {
+      statusCode: 429,
+      error: "Too many requests in 1 minute",
+      message: `You have been exceeded ${context.max} request in ${context.after}`,
+    }
+  },
 })
 
 app

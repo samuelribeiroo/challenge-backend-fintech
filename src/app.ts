@@ -1,8 +1,8 @@
+import fastifyJwt from "@fastify/jwt"
 import { fastify } from "fastify"
 import { ZodError } from "zod"
-import { env } from "./env"
 import userRoutes  from "./controllers/routes"
-import fastifyJwt from "@fastify/jwt"
+import { env } from "./env"
 import authenticatePlugin from "./plugins/authenticate"
 
 
@@ -25,7 +25,7 @@ app.setErrorHandler((error, _, reply) => {
 
   env.NODE_ENV !== "prod" ? console.log(error) : null
 
-  if (error.statusCode === 429) reply.status(429).send({ message: error.stack })
+  if (error.statusCode === 429) reply.status(429).send({ message: error.message })
 
   reply.status(500).send({ message: "Internal server error" })
 })
