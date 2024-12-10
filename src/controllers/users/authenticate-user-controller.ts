@@ -9,12 +9,14 @@ export default async function authenticate(request: FastifyRequest, reply: Fasti
   try {
     const authenticateUseCase = makeAuthenticateUser()
 
-    await authenticateUseCase.authenticate({ cpf, password })
+    const { user } = await authenticateUseCase.authenticate({ cpf, password })
+
+    const token = request.server.jwt.sign({ id: user.id })
+
+    return reply.status(200).send({ message: token })
   } catch (error) {
     if (error instanceof InvalidCredentialsError) reply.status(400).send({ message: error.message })
 
     return reply.status(500).send({ message: '"Internal Server Error."' })
   }
-
-  return reply.status(204).send()
 }

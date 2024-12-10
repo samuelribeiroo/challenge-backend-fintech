@@ -16,7 +16,7 @@ export class PrismaUserRepository implements IUserRepository {
     }
   }
 
-  async findCpf(cpf: string): Promise<AuthenticateUserResponse | null> {
+  async findByCpf(cpf: string): Promise<AuthenticateUserResponse | null> {
     const user = await prisma.userApp.findUnique({
       where: { cpf },
     })
@@ -26,7 +26,8 @@ export class PrismaUserRepository implements IUserRepository {
     return {
       full_name: user.full_name,
       role: user.role,
-      password: user.password
+      password: user.password,
+      id: user.id
     }
   }
 }

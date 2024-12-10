@@ -1,7 +1,10 @@
-import { beforeEach, describe, expect, it, vitest } from "vitest"
+import { beforeEach, describe, expect, it, vi, vitest } from "vitest"
 import { InMemoryIUserRepository } from "../../../repositories/in-memory/in-memory-user-repository"
 import { AuthenticateService } from "./authenticate"
 import { hash } from "bcrypt"
+import authenticate from "../../../controllers/users/authenticate-user-controller"
+import makeAuthenticateUseCase from "../../factories/makeAuthenticateUseCase"
+import { FastifyReply, FastifyRequest } from "fastify"
 
 let sut: AuthenticateService
 let inMemory: InMemoryIUserRepository
@@ -27,7 +30,6 @@ describe("Use Case: Authenticate", () => {
       total_balance: 120,
     })
 
-   
     const authenticate = sut.authenticate({
       cpf: user.cpf,
       password: plainTextPassword,

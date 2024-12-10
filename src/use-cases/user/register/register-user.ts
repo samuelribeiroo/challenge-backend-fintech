@@ -5,7 +5,7 @@ import { isValidCpf } from "@/utils/validation"
 import { hash } from "bcrypt"
 import { IUserRepository } from "../../../repositories/customer-repository"
 
-// @ts-ignore -> The 'findCpf' method implementation is not necessary here. So the solution that I find to stop the error it's ignore it.
+// @ts-ignore -> The 'findByCpf' method implementation is not necessary here. So the solution that I find to stop the error it's ignore it.
 export class RegisterUserService  {
   constructor(private readonly customerService: IUserRepository) {}
 
@@ -19,7 +19,7 @@ export class RegisterUserService  {
 
     if (!isValidCpf(cpf)) throw new Error("Inserted CPF format is not valid.")
 
-    const isUniqueCPF = await this.customerService.findCpf(cpf)
+    const isUniqueCPF = await this.customerService.findByCpf(cpf)
 
     if (isUniqueCPF) throw new NotAllowedCpfDuplicated()
 

@@ -1,6 +1,7 @@
-import type { FastifyInstance } from "fastify"
-import authenticate from "./users/register/authenticate-user-controller"
-import register from "./users/register/user-register-controller"
+import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"
+import authenticate from "./users/authenticate-user-controller"
+import register from "./users/user-register-controller"
+
 
 export default function userRoutes(app: FastifyInstance) {
   app.post("/register", register)

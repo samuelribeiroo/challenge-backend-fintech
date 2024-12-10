@@ -13,3 +13,16 @@ export interface IUser {
 }
 
 export type UserResponse = Omit<IUser, "password" | "balance" | "cpf" | "cnpj" | "id" | "email" | "total_balance">
+
+export type AuthenticateUserResponse = Omit<IUser, | "balance" | "cpf" | "cnpj" | "email" | "total_balance">
+
+export interface AuthenticateUserRequest {
+  cpf: string
+  password: string
+}
+
+export interface AuthenticateUseCaseResponse {
+  user: {
+    id: string
+  }
+}
