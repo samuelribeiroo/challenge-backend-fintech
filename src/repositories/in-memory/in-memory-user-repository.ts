@@ -28,4 +28,8 @@ export class InMemoryIUserRepository implements IUserRepository {
   async findByCpf(cpf: string): Promise<UserResponse | null> {
     return this.items.find(item => item.cpf === cpf) || null
   }
+
+   async findById(id: string): Promise<UserResponse | null> {
+    return this.items.find(item => item.id == id) || null
+  }
 }
