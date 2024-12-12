@@ -5,13 +5,11 @@ import { IUserRepository } from "../customer-repository"
 export class InMemoryIUserRepository implements IUserRepository {
   public items: IUser[] = []
 
-  async create(data: IUser): Promise<UserResponse> {
+  async create(data: IUser): Promise<UserResponse | any> {
     const { id, full_name, cpf, email, password, role, total_balance } = data
 
-    if (!isValidCpf(cpf)) {
-      throw new Error("Inserted CPF format is not valid.")
-    }
-
+    if (!isValidCpf(cpf)) throw new Error("Inserted CPF format is not valid.")
+    
     const customer: IUser = {
       id,
       full_name,
@@ -27,11 +25,11 @@ export class InMemoryIUserRepository implements IUserRepository {
     return Promise.resolve(customer)
   }
 
-  async findCpf(cpf: string): Promise<UserResponse | null> {
-    const customer = this.items.find(item => item.cpf === cpf)
+  async findByCpf(cpf: string): Promise<UserResponse | null> {
+    return this.items.find(item => item.cpf === cpf) || null
+  }
 
-    if (customer) throw new Error("CPF already exists.")
-
-    return customer || null
+   async findById(id: string): Promise<UserResponse | null> {
+    return this.items.find(item => item.id == id) || null
   }
 }

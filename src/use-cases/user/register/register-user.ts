@@ -5,7 +5,7 @@ import { isValidCpf } from "@/utils/validation"
 import { hash } from "bcrypt"
 import { IUserRepository } from "../../../repositories/customer-repository"
 
-// @ts-ignore -> The 'findCpf' method implementation is not necessary here. So the solution that I find to stop the error it's ignore it.
+// @ts-ignore -> The 'findByCpf' method implementation is not necessary here. So the solution that I find to stop the error it's ignore it.
 export class RegisterUserService  {
   constructor(private readonly customerService: IUserRepository) {}
 
@@ -13,13 +13,13 @@ export class RegisterUserService  {
   async create(data: IUser): Promise<UserResponse> {
     const processData = userSchema.parse(data)
 
-    const { id, full_name, cpf, email, password, role, total_balance } = processData
+    const { id, full_name, cpf, email, password, role, total_balance, cnpj } = processData
 
     const hashedPassword = await hash(password, 6)
 
     if (!isValidCpf(cpf)) throw new Error("Inserted CPF format is not valid.")
 
-    const isUniqueCPF = await this.customerService.findCpf(cpf)
+    const isUniqueCPF = await this.customerService.findByCpf(cpf)
 
     if (isUniqueCPF) throw new NotAllowedCpfDuplicated()
 
@@ -28,6 +28,7 @@ export class RegisterUserService  {
       full_name,
       cpf,
       email,
+      cnpj,
       password: hashedPassword,
       total_balance: +total_balance,
       role,

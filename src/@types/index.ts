@@ -26,3 +26,8 @@ const commonUserSchema = baseUserSchema.extend({
 })
 
 export const userSchema = z.discriminatedUnion("role", [storeOwnerSchema, commonUserSchema])
+
+export const authenticateBodySchema = z.object({
+  cpf: z.string(),
+  password: z.string(),
+})

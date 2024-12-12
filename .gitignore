@@ -8,3 +8,6 @@ yarn.lock
 
 # Explanation about the project
 docs
+
+# Migrations from database
+migrations
