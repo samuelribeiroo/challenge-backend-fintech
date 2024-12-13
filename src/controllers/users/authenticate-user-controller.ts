@@ -13,7 +13,7 @@ export default async function authenticate(request: FastifyRequest, reply: Fasti
 
     const token = request.server.jwt.sign({ id: user.id })
 
-    return reply.status(200).send({ message: token })
+    return reply.status(204).send()
   } catch (error) {
     if (error instanceof InvalidCredentialsError) reply.status(400).send({ message: error.message })
 
